@@ -134,3 +134,43 @@ page {
     font-size: 14px;
     font-weight: normal;
 }
+
+.AA-money {
+	font-size: 20px;
+	color : darkorange;
+	/* margin-right: 46px; */
+}
+
+	
+.AA-time-return{
+	font-size: 28px;
+	color : C34A51;
+}
+
+.AA-money-change {
+	font-size: 15px;
+	color : darkred;
+	white-space:pre-line;
+}
+
+.AA-money-change-down {
+	font-size: 15px;
+	color : green;
+	white-space:pre-line;
+}
+
+
+.rental-prices {
+	color : blueviolet;
+	/* margin-right: 16px; */
+}
+
+.rental-trend {
+	color : coral;
+	/* margin-right: 18px; */
+}
+
+.banner-image {
+    width: 400px;
+    height: 160px;
+}

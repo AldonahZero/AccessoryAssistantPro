@@ -16,7 +16,7 @@
 		{
 			"path": "pages/tabBar/component/component",
 			"style": {
-				"navigationBarTitleText": "内置组件",
+				"navigationBarTitleText": "出租年化",
 				"app-plus": {
 					"bounce": "vertical",
 					"titleNView": {
@@ -33,7 +33,7 @@
 		{
 			"path": "pages/tabBar/API/API",
 			"style": {
-				"navigationBarTitleText": "接口",
+				"navigationBarTitleText": "搜索饰品",
 				"app-plus": {
 					"titleNView": {
 						"buttons": [{
@@ -65,7 +65,7 @@
 		{
 			"path": "pages/tabBar/extUI/extUI",
 			"style": {
-				"navigationBarTitleText": "扩展组件",
+				"navigationBarTitleText": "大盘走势",
 				"app-plus": {
 					"titleNView": {
 						"buttons": [{
@@ -1349,23 +1349,23 @@
 				"pagePath": "pages/tabBar/component/component",
 				"iconPath": "static/component.png",
 				"selectedIconPath": "static/componentHL.png",
-				"text": "内置组件"
+				"text": "出租年化"
 			},
 			{
 				"pagePath": "pages/tabBar/API/API",
 				"iconPath": "static/api.png",
 				"selectedIconPath": "static/apiHL.png",
-				"text": "接口"
+				"text": "搜索饰品"
 			}, {
 				"pagePath": "pages/tabBar/extUI/extUI",
 				"iconPath": "static/extui.png",
 				"selectedIconPath": "static/extuiHL.png",
-				"text": "扩展组件"
+				"text": "大盘走势"
 			}, {
 				"pagePath": "pages/tabBar/template/template",
 				"iconPath": "static/template.png",
 				"selectedIconPath": "static/templateHL.png",
-				"text": "模板"
+				"text": "个人中心"
 			}
 		]
 	}

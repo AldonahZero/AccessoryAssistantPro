@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "大盘走势",
+  "usingComponents": {
+    "u-link": "/components/u-link/u-link"
+  }
+}

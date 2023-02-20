@@ -1,9 +1,83 @@
 <template>
 	<view class="uni-container">
+		<view class="uni-margin-wrap">
+			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
+				:duration="duration">
+				<swiper-item>
+					<view class="swiper-item uni-bg-red">
+						<image class="banner-image" src="/static/banner.jpeg"></image>
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="swiper-item uni-bg-green">B</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="swiper-item uni-bg-blue">C</view>
+				</swiper-item>
+			</swiper>
+		</view>
+		<view class="container">
+			<uni-row class="demo-uni-row">
+
+			</uni-row>
+			<uni-fab ref="fab" :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical"
+				:direction="direction" @trigger="trigger" @fabClick="fabClick" />
+		</view>
 		<view class="uni-panel" v-for="(item, index) in list" :key="index">
-			<uni-card :title="item.goodsName" :isFull="true" :extra="String(index+1)">
-				<image class="uni-header-image" :src="item.iconUrl"></image>
-				<text></text>
+			<uni-card :title="item.goodsName" :isFull="true" :extra="String(index+1)" :thumbnail="item.iconUrl">
+				<!-- 				<image class="uni-header-image" :src="item.iconUrl"></image> -->
+				<uni-row class="demo-uni-row">
+					<uni-col :span="8">
+						<view class="example-body">
+
+							<text class="AA-money">¥ {{item.price/100.0}} </text>
+							<text class="rental-trend">🔥 {{item.leaseCountChange7}} </text>
+						</view>
+
+					</uni-col>
+					<uni-col :span="16" :offset="6">
+						<view class="example-body">
+
+							<uni-tooltip class="AA-money-change" :content="getChangeTips(item.minPriceChangePercent)"
+								v-if="item.minPriceChangePercent[pricesChangeDay]>0">价格变动:
+								📈{{(item.minPriceChangePercent[pricesChangeDay] *100).toFixed(3)}} %</uni-tooltip>
+							<uni-tooltip class="AA-money-change-down"
+								:content="getChangeTips(item.minPriceChangePercent)" v-else>价格变动:
+								📉{{(item.minPriceChangePercent[pricesChangeDay] *100).toFixed(3)}} %
+							</uni-tooltip>
+						</view>
+					</uni-col>
+
+
+
+				</uni-row>
+				<uni-row class="demo-uni-row">
+					<uni-col :span="12">
+						<view class="example-body">
+							<text class="rental-prices">短租: {{item.leasePrice/100.0}} / 长租:
+								{{item.longLeasePrice/100.0}}
+							</text>
+
+						</view>
+
+					</uni-col>
+					<uni-col :span="16" :offset="2">
+						<view class="example-body">
+
+							<text class="AA-time-return">{{countShortLease(item.leasePrice,item.price)}} %</text>
+						</view>
+					</uni-col>
+
+
+
+				</uni-row>
+
+
+
+
+				<view class="example-body">
+					<uni-fav :checked="collect" :content-text="contentText" @click="favClick(collect)" />
+				</view>
 			</uni-card>
 		</view>
 	</view>
@@ -24,28 +98,100 @@
 			},
 			leftWinActive: {
 				type: String
+			},
+			collect: {
+				type: Boolean
 			}
 		},
 		data() {
 			return {
-				list: [
+				contentText: {
+					contentDefault: '收藏',
+					contentFav: '已收藏'
+				},
+				list: [],
+				indicatorDots: true,
+				autoplay: true,
+				interval: 2000,
+				duration: 500,
+				pricesChangeDay: 1,
+				horizontal: 'left',
+				vertical: 'top',
+				direction: 'vertical',
+				pattern: {
+					color: '#7A7E83',
+					backgroundColor: '#fff',
+					selectedColor: '#007AFF',
+					buttonColor: '#007AFF',
+					iconColor: '#fff'
+				},
+				is_color_type: false,
+				content: [{
+						iconPath: '/static/image.png',
+						selectedIconPath: '/static/image-active.png',
+						text: '短租年化',
+						active: false
+					},
+					{
+						iconPath: '/static/home.png',
+						selectedIconPath: '/static/home-active.png',
+						text: '长租年化',
+						active: false
+					},
+					{
+						iconPath: '/static/star.png',
+						selectedIconPath: '/static/star-active.png',
+						text: '挂刀比例',
+						active: false
+					},
+					{
+						iconPath: '/static/image.png',
+						selectedIconPath: '/static/image-active.png',
+						text: '涨价排行',
+						active: false
+					},
+					{
+						iconPath: '/static/home.png',
+						selectedIconPath: '/static/home-active.png',
+						text: '涨价百分比排行',
+						active: false
+					},
+					{
+						iconPath: '/static/star.png',
+						selectedIconPath: '/static/star-active.png',
+						text: '跌价排行',
+						active: false
+					},
+					{
+						iconPath: '/static/image.png',
+						selectedIconPath: '/static/image-active.png',
+						text: '跌价百分比排行',
+						active: false
+					}
 				]
 			}
 		},
+		onBackPress() {
+			if (this.$refs.fab.isShow) {
+				this.$refs.fab.close()
+				return true
+			}
+			return false
+		},
 		onLoad() {
 			uni.request({
-			    url: 'https://www.fastmock.site/mock/d52e60b6a14228ac1afac5b2899e2760/v1/shortLease', //仅为示例，并非真实接口地址。
-			    data: {
-			        text: 'uni.request'
-			    },
-			    header: {
-			        'custom-header': 'hello' //自定义请求头信息
-			    },
-			    success: (res) => {
-			        console.log(res.data);
-					
-			        this.list = res.data.rankList;
-			    }
+				url: 'https://www.fastmock.site/mock/d52e60b6a14228ac1afac5b2899e2760/v1/shortLease', //仅为示例，并非真实接口地址。
+				data: {
+					text: 'uni.request'
+				},
+				header: {
+					'custom-header': 'hello' //自定义请求头信息
+				},
+				success: (res) => {
+					console.log(res.data);
+
+					this.list = res.data.rankList;
+				}
 			});
 		},
 		onShareAppMessage() {
@@ -81,6 +227,57 @@
 		},
 		// #endif
 		methods: {
+			changeIndicatorDots(e) {
+				this.indicatorDots = !this.indicatorDots
+			},
+			changeAutoplay(e) {
+				this.autoplay = !this.autoplay
+			},
+			intervalChange(e) {
+				this.interval = e.target.value
+			},
+			durationChange(e) {
+				this.duration = e.target.value
+			},
+			trigger(e) {
+				console.log(e)
+				this.content[e.index].active = !e.item.active
+				uni.showModal({
+					title: '提示',
+					content: `您${this.content[e.index].active ? '选中了' : '取消了'}${e.item.text}`,
+					success: function(res) {
+						if (res.confirm) {
+							console.log('用户点击确定')
+						} else if (res.cancel) {
+							console.log('用户点击取消')
+						}
+					}
+				})
+			},
+			fabClick() {
+				uni.showToast({
+					title: '点击了悬浮按钮',
+					icon: 'none'
+				})
+			},
+			favClick(index) {
+				this.collect = !this.collect
+				this.$forceUpdate()
+			},
+			priceFormat(price) {
+				return price / 100.0;
+			},
+			getChangeTips(minPriceChangePercent) {
+				var tips_str =
+					`近1天:${(minPriceChangePercent[1] *100).toFixed(2)}%\n 近7天:${(minPriceChangePercent[7] *100).toFixed(2)}% \n近15天:${(minPriceChangePercent[15] *100).toFixed(2)} \n近30天:${(minPriceChangePercent[30] *100).toFixed(2)}% \n近90天:${(minPriceChangePercent[90] *100).toFixed(2)}%`
+				return tips_str;
+			},
+			countShortLease(ShortLease, Price) {
+				return (192 * ShortLease / Price * 100).toFixed(2);
+			},
+			countLongLease(LongLease, Price) {
+				return (264 * LongLease / Price * 100).toFixed(2);
+			},
 			triggerCollapse(e, id) {
 				if (!this.list[e].pages) {
 					this.goDetailPage('', this.list[e].url);
