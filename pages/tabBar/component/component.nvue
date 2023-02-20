@@ -1,0 +1,127 @@
+<template>
+	<view class="uni-container">
+		<view class="uni-panel" v-for="(item, index) in list" :key="index">
+			<uni-card :title="item.goodsName" :isFull="true" :extra="String(index+1)">
+				<image class="uni-header-image" :src="item.iconUrl"></image>
+				<text></text>
+			</uni-card>
+		</view>
+	</view>
+</template>
+<script>
+	// TODO 修复Android v3 加载过慢问题
+	// #ifdef APP-PLUS
+	var domModule = weex.requireModule('dom');
+	domModule.addRule('fontFace', {
+		'fontFamily': "uniicons",
+		'src': "url('/static/uni.ttf')"
+	});
+	// #endif
+	export default {
+		props: {
+			hasLeftWin: {
+				type: Boolean
+			},
+			leftWinActive: {
+				type: String
+			}
+		},
+		data() {
+			return {
+				list: [
+				]
+			}
+		},
+		onLoad() {
+			uni.request({
+			    url: 'https://www.fastmock.site/mock/d52e60b6a14228ac1afac5b2899e2760/v1/shortLease', //仅为示例，并非真实接口地址。
+			    data: {
+			        text: 'uni.request'
+			    },
+			    header: {
+			        'custom-header': 'hello' //自定义请求头信息
+			    },
+			    success: (res) => {
+			        console.log(res.data);
+					
+			        this.list = res.data.rankList;
+			    }
+			});
+		},
+		onShareAppMessage() {
+			return {
+				title: '欢迎体验uni-app',
+				path: '/pages/tabBar/component/component'
+			}
+		},
+		onNavigationBarButtonTap(e) {
+			uni.navigateTo({
+				url: '/pages/about/about'
+			});
+		},
+		// #ifdef H5
+		watch: {
+			$route: {
+				immediate: true,
+				handler(newRoute) {
+					if (newRoute.matched.length) {
+						let path = newRoute.path.split('/')[3]
+						for (const item of this.list) {
+							if (Array.isArray(item.pages)) {
+								for (const page of item.pages) {
+									if (page === path || page.url && page.url === newRoute.path) {
+										item.open = true
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		// #endif
+		methods: {
+			triggerCollapse(e, id) {
+				if (!this.list[e].pages) {
+					this.goDetailPage('', this.list[e].url);
+					return;
+				}
+				for (var i = 0; i < this.list.length; ++i) {
+					if (e === i) {
+						this.list[i].open = !this.list[i].open;
+					} else {
+						this.list[i].open = false;
+					}
+				}
+			},
+			goDetailPage(panel, e) {
+				if (typeof e === 'string') {
+					const url = '/pages/component/' + e + '/' + e
+					if (this.hasLeftWin) {
+						uni.reLaunch({
+							url: url
+						})
+					} else {
+						uni.navigateTo({
+							url: url
+						})
+					}
+				} else {
+					if (this.hasLeftWin) {
+						uni.reLaunch({
+							url: e.url
+						})
+					} else {
+						uni.navigateTo({
+							url: e.url
+						})
+					}
+				}
+			}
+		}
+	}
+</script>
+
+<style>
+	@import '../../../common/uni-nvue.css';
+</style>
