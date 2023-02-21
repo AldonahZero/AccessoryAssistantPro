@@ -103,14 +103,14 @@ __webpack_require__.r(__webpack_exports__);
 var components
 try {
   components = {
-    uniRow: function () {
-      return __webpack_require__.e(/*! import() | uni_modules/uni-row/components/uni-row/uni-row */ "uni_modules/uni-row/components/uni-row/uni-row").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-row/components/uni-row/uni-row.vue */ 1224))
-    },
     uniFab: function () {
-      return __webpack_require__.e(/*! import() | uni_modules/uni-fab/components/uni-fab/uni-fab */ "uni_modules/uni-fab/components/uni-fab/uni-fab").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-fab/components/uni-fab/uni-fab.vue */ 1231))
+      return __webpack_require__.e(/*! import() | uni_modules/uni-fab/components/uni-fab/uni-fab */ "uni_modules/uni-fab/components/uni-fab/uni-fab").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-fab/components/uni-fab/uni-fab.vue */ 1224))
     },
     uniCard: function () {
-      return __webpack_require__.e(/*! import() | uni_modules/uni-card/components/uni-card/uni-card */ "uni_modules/uni-card/components/uni-card/uni-card").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-card/components/uni-card/uni-card.vue */ 1238))
+      return __webpack_require__.e(/*! import() | uni_modules/uni-card/components/uni-card/uni-card */ "uni_modules/uni-card/components/uni-card/uni-card").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-card/components/uni-card/uni-card.vue */ 1231))
+    },
+    uniRow: function () {
+      return __webpack_require__.e(/*! import() | uni_modules/uni-row/components/uni-row/uni-row */ "uni_modules/uni-row/components/uni-row/uni-row").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-row/components/uni-row/uni-row.vue */ 1238))
     },
     uniCol: function () {
       return __webpack_require__.e(/*! import() | uni_modules/uni-row/components/uni-col/uni-col */ "uni_modules/uni-row/components/uni-col/uni-col").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-row/components/uni-col/uni-col.vue */ 1245))
@@ -120,6 +120,9 @@ try {
     },
     uniFav: function () {
       return Promise.all(/*! import() | uni_modules/uni-fav/components/uni-fav/uni-fav */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-fav/components/uni-fav/uni-fav")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-fav/components/uni-fav/uni-fav.vue */ 1259))
+    },
+    loading: function () {
+      return __webpack_require__.e(/*! import() | components/loading/loading */ "components/loading/loading").then(__webpack_require__.bind(null, /*! @/components/loading/loading.vue */ 1270))
     },
   }
 } catch (e) {
@@ -143,34 +146,36 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var l0 = _vm.__map(_vm.list, function (item, index) {
-    var $orig = _vm.__get_orig(item)
-    var m0 = String(index + 1)
-    var m1 =
-      item.minPriceChangePercent[_vm.pricesChangeDay] > 0
-        ? _vm.getChangeTips(item.minPriceChangePercent)
-        : null
-    var g0 =
-      item.minPriceChangePercent[_vm.pricesChangeDay] > 0
-        ? (item.minPriceChangePercent[_vm.pricesChangeDay] * 100).toFixed(3)
-        : null
-    var m2 = !(item.minPriceChangePercent[_vm.pricesChangeDay] > 0)
-      ? _vm.getChangeTips(item.minPriceChangePercent)
-      : null
-    var g1 = !(item.minPriceChangePercent[_vm.pricesChangeDay] > 0)
-      ? (item.minPriceChangePercent[_vm.pricesChangeDay] * 100).toFixed(3)
-      : null
-    var m3 = _vm.countShortLease(item.leasePrice, item.price)
-    return {
-      $orig: $orig,
-      m0: m0,
-      m1: m1,
-      g0: g0,
-      m2: m2,
-      g1: g1,
-      m3: m3,
-    }
-  })
+  var l0 = !_vm.loading
+    ? _vm.__map(_vm.list, function (item, index) {
+        var $orig = _vm.__get_orig(item)
+        var m0 = String(index + 1)
+        var m1 =
+          item.minPriceChangePercent[_vm.pricesChangeDay] > 0
+            ? _vm.getChangeTips(item.minPriceChangePercent)
+            : null
+        var g0 =
+          item.minPriceChangePercent[_vm.pricesChangeDay] > 0
+            ? (item.minPriceChangePercent[_vm.pricesChangeDay] * 100).toFixed(3)
+            : null
+        var m2 = !(item.minPriceChangePercent[_vm.pricesChangeDay] > 0)
+          ? _vm.getChangeTips(item.minPriceChangePercent)
+          : null
+        var g1 = !(item.minPriceChangePercent[_vm.pricesChangeDay] > 0)
+          ? (item.minPriceChangePercent[_vm.pricesChangeDay] * 100).toFixed(3)
+          : null
+        var m3 = _vm.countShortLease(item.leasePrice, item.price)
+        return {
+          $orig: $orig,
+          m0: m0,
+          m1: m1,
+          g0: g0,
+          m2: m2,
+          g1: g1,
+          m3: m3,
+        }
+      })
+    : null
   _vm.$mp.data = Object.assign(
     {},
     {
@@ -218,125 +223,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+var loading = function loading() {
+  __webpack_require__.e(/*! require.ensure | components/loading/loading */ "components/loading/loading").then((function () {
+    return resolve(__webpack_require__(/*! ../../../components/loading/loading.vue */ 1270));
+  }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
+};
 // TODO 修复Android v3 加载过慢问题
 var _default = {
+  components: {
+    loading: loading
+  },
   props: {
     hasLeftWin: {
       type: Boolean
@@ -354,13 +250,15 @@ var _default = {
         contentDefault: '收藏',
         contentFav: '已收藏'
       },
+      loading: true,
+      showLoadMore: false,
       list: [],
       indicatorDots: true,
       autoplay: true,
       interval: 2000,
       duration: 500,
       pricesChangeDay: 1,
-      horizontal: 'left',
+      horizontal: 'right',
       vertical: 'top',
       direction: 'vertical',
       pattern: {
@@ -430,6 +328,7 @@ var _default = {
 
       success: function success(res) {
         console.log(res.data);
+        _this.loading = false;
         _this.list = res.data.rankList;
       }
     });
@@ -445,7 +344,46 @@ var _default = {
       url: '/pages/about/about'
     });
   },
+  onPullDownRefresh: function onPullDownRefresh() {
+    console.log('onPullDownRefresh');
+    // this.initData();
+  },
+  onReachBottom: function onReachBottom() {
+    var _this2 = this;
+    console.log("onReachBottom");
+    // if (this.max > 40) {
+    // 	this.loadMoreText = "没有更多数据了!"
+    // 	return;
+    // }
+    this.showLoadMore = true;
+    setTimeout(function () {
+      _this2.getMoreListData();
+    }, 300);
+  },
   methods: {
+    getMoreListData: function getMoreListData() {
+      var _this3 = this;
+      uni.request({
+        url: 'https://www.fastmock.site/mock/d52e60b6a14228ac1afac5b2899e2760/v1/shortLease',
+        //仅为示例，并非真实接口地址。
+        data: {
+          text: 'uni.request'
+        },
+        header: {
+          'custom-header': 'hello' //自定义请求头信息
+        },
+
+        success: function success(res) {
+          console.log(res.data);
+          _this3.showLoadMore = false;
+          var data = res.data.rankList;
+          _this3.list = _this3.list.concat(data);
+        }
+      });
+    },
+    onrefresh: function onrefresh(e) {
+      console.log(1);
+    },
     changeIndicatorDots: function changeIndicatorDots(e) {
       this.indicatorDots = !this.indicatorDots;
     },

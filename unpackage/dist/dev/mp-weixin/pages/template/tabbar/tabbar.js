@@ -162,7 +162,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var mediaItem = function mediaItem() {
   __webpack_require__.e(/*! require.ensure | pages/template/tabbar/news-item */ "pages/template/tabbar/news-item").then((function () {
-    return resolve(__webpack_require__(/*! ./news-item.nvue */ 1716));
+    return resolve(__webpack_require__(/*! ./news-item.nvue */ 1723));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 // 缓存每页最多

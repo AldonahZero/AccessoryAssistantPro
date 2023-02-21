@@ -218,7 +218,7 @@ var MAX_CACHE_PAGE = 3;
 var TAB_PRELOAD_OFFSET = 1;
 var swiperPage = function swiperPage() {
   __webpack_require__.e(/*! require.ensure | pages/template/swiper-list/swiper-page */ "pages/template/swiper-list/swiper-page").then((function () {
-    return resolve(__webpack_require__(/*! ./swiper-page.nvue */ 1723));
+    return resolve(__webpack_require__(/*! ./swiper-page.nvue */ 1730));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 var _default = {

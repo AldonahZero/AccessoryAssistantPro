@@ -27,7 +27,9 @@
 							"color": "#FFFFFF"
 						}]
 					}
-				}
+				},
+				// 配置下拉刷新
+				"enablePullDownRefresh": true
 			}
 		},
 		{

@@ -1,5 +1,5 @@
 <template>
-	<view class="uni-container">
+	<scroll-view class="uni-container" v-if="!loading">
 		<view class="uni-margin-wrap">
 			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
 				:duration="duration">
@@ -16,73 +16,84 @@
 				</swiper-item>
 			</swiper>
 		</view>
-		<view class="container">
-			<uni-row class="demo-uni-row">
-
-			</uni-row>
+		<view class="container" scroll-y="true">
+	<!-- 		<refresh @refresh="onrefresh" name="leaseFresh">
+			</refresh> -->
 			<uni-fab ref="fab" :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical"
 				:direction="direction" @trigger="trigger" @fabClick="fabClick" />
-		</view>
-		<view class="uni-panel" v-for="(item, index) in list" :key="index">
-			<uni-card :title="item.goodsName" :isFull="true" :extra="String(index+1)" :thumbnail="item.iconUrl">
-				<!-- 				<image class="uni-header-image" :src="item.iconUrl"></image> -->
-				<uni-row class="demo-uni-row">
-					<uni-col :span="8">
-						<view class="example-body">
-
-							<text class="AA-money">¥ {{item.price/100.0}} </text>
-							<text class="rental-trend">🔥 {{item.leaseCountChange7}} </text>
-						</view>
-
-					</uni-col>
-					<uni-col :span="16" :offset="6">
-						<view class="example-body">
-
-							<uni-tooltip class="AA-money-change" :content="getChangeTips(item.minPriceChangePercent)"
-								v-if="item.minPriceChangePercent[pricesChangeDay]>0">价格变动:
-								📈{{(item.minPriceChangePercent[pricesChangeDay] *100).toFixed(3)}} %</uni-tooltip>
-							<uni-tooltip class="AA-money-change-down"
-								:content="getChangeTips(item.minPriceChangePercent)" v-else>价格变动:
-								📉{{(item.minPriceChangePercent[pricesChangeDay] *100).toFixed(3)}} %
-							</uni-tooltip>
-						</view>
-					</uni-col>
 
 
+			<view class="uni-panel" v-for="(item, index) in list" :key="index">
+				<uni-card :title="item.goodsName" :isFull="true" :extra="String(index+1)" :thumbnail="item.iconUrl">
+					<!-- 				<image class="uni-header-image" :src="item.iconUrl"></image> -->
+					<uni-row class="demo-uni-row">
+						<uni-col :span="8">
+							<view class="example-body">
 
-				</uni-row>
-				<uni-row class="demo-uni-row">
-					<uni-col :span="12">
-						<view class="example-body">
-							<text class="rental-prices">短租: {{item.leasePrice/100.0}} / 长租:
-								{{item.longLeasePrice/100.0}}
-							</text>
+								<text class="AA-money">¥ {{item.price/100.0}} </text>
+								<text class="rental-trend">🔥 {{item.leaseCountChange7}} </text>
+							</view>
 
-						</view>
+						</uni-col>
+						<uni-col :span="16" :offset="6">
+							<view class="example-body">
 
-					</uni-col>
-					<uni-col :span="16" :offset="2">
-						<view class="example-body">
-
-							<text class="AA-time-return">{{countShortLease(item.leasePrice,item.price)}} %</text>
-						</view>
-					</uni-col>
+								<uni-tooltip class="AA-money-change"
+									:content="getChangeTips(item.minPriceChangePercent)"
+									v-if="item.minPriceChangePercent[pricesChangeDay]>0">价格变动:
+									📈{{(item.minPriceChangePercent[pricesChangeDay] *100).toFixed(3)}} %</uni-tooltip>
+								<uni-tooltip class="AA-money-change-down"
+									:content="getChangeTips(item.minPriceChangePercent)" v-else>价格变动:
+									📉{{(item.minPriceChangePercent[pricesChangeDay] *100).toFixed(3)}} %
+								</uni-tooltip>
+							</view>
+						</uni-col>
 
 
 
-				</uni-row>
+					</uni-row>
+					<uni-row class="demo-uni-row">
+						<uni-col :span="12">
+							<view class="example-body">
+								<text class="rental-prices">短租: {{item.leasePrice/100.0}}
+								</text>
+								<text class="rental-prices">长租: {{item.longLeasePrice/100.0}}
+								</text>
+							</view>
+
+						</uni-col>
+						<uni-col :span="14" :offset="2">
+							<view class="example-body">
+
+								<text class="AA-time-return">{{countShortLease(item.leasePrice,item.price)}} %</text>
+							</view>
+						</uni-col>
+
+
+
+					</uni-row>
 
 
 
 
-				<view class="example-body">
-					<uni-fav :checked="collect" :content-text="contentText" @click="favClick(collect)" />
-				</view>
-			</uni-card>
-		</view>
+					<view class="example-body">
+						<uni-fav :checked="collect" :content-text="contentText" @click="favClick(collect)" />
+					</view>
+				</uni-card>
+			</view>
+			<view class="loading" v-if="showLoadMore">
+				<image src="/static/loading.gif"></image>
+			</view>
+		
+
+
+
 	</view>
+	</scroll-view>
+	<loading v-else></loading>
 </template>
 <script>
+	import loading from '../../../components/loading/loading.vue'
 	// TODO 修复Android v3 加载过慢问题
 	// #ifdef APP-PLUS
 	var domModule = weex.requireModule('dom');
@@ -92,6 +103,9 @@
 	});
 	// #endif
 	export default {
+		components: {
+			loading
+		},
 		props: {
 			hasLeftWin: {
 				type: Boolean
@@ -109,13 +123,15 @@
 					contentDefault: '收藏',
 					contentFav: '已收藏'
 				},
+				loading: true,
+				showLoadMore: false,
 				list: [],
 				indicatorDots: true,
 				autoplay: true,
 				interval: 2000,
 				duration: 500,
 				pricesChangeDay: 1,
-				horizontal: 'left',
+				horizontal: 'right',
 				vertical: 'top',
 				direction: 'vertical',
 				pattern: {
@@ -127,44 +143,44 @@
 				},
 				is_color_type: false,
 				content: [{
-						iconPath: '/static/image.png',
-						selectedIconPath: '/static/image-active.png',
+						iconPath: '/static/shourt-lease.png',
+						selectedIconPath: '/static/shourt-lease-sl.png',
 						text: '短租年化',
 						active: false
 					},
 					{
-						iconPath: '/static/home.png',
-						selectedIconPath: '/static/home-active.png',
+						iconPath: '/static/long-lease.png',
+						selectedIconPath: '/static/long-lease-sl.png',
 						text: '长租年化',
 						active: false
 					},
 					{
-						iconPath: '/static/star.png',
-						selectedIconPath: '/static/star-active.png',
+						iconPath: '/static/steam.png',
+						selectedIconPath: '/static/steam-sl.png',
 						text: '挂刀比例',
 						active: false
 					},
 					{
-						iconPath: '/static/image.png',
-						selectedIconPath: '/static/image-active.png',
+						iconPath: '/static/price-up.png',
+						selectedIconPath: '/static/price-up-sl.png',
 						text: '涨价排行',
 						active: false
 					},
 					{
-						iconPath: '/static/home.png',
-						selectedIconPath: '/static/home-active.png',
+						iconPath: '/static/price-up-precent.png',
+						selectedIconPath: '/static/price-up-precent.png',
 						text: '涨价百分比排行',
 						active: false
 					},
 					{
-						iconPath: '/static/star.png',
-						selectedIconPath: '/static/star-active.png',
+						iconPath: '/static/price-down.png',
+						selectedIconPath: '/static/price-down-sl.png',
 						text: '跌价排行',
 						active: false
 					},
 					{
-						iconPath: '/static/image.png',
-						selectedIconPath: '/static/image-active.png',
+						iconPath: '/static/price-down-precnet.png',
+						selectedIconPath: '/static/price-down-precent-sl.png',
 						text: '跌价百分比排行',
 						active: false
 					}
@@ -179,20 +195,7 @@
 			return false
 		},
 		onLoad() {
-			uni.request({
-				url: 'https://www.fastmock.site/mock/d52e60b6a14228ac1afac5b2899e2760/v1/shortLease', //仅为示例，并非真实接口地址。
-				data: {
-					text: 'uni.request'
-				},
-				header: {
-					'custom-header': 'hello' //自定义请求头信息
-				},
-				success: (res) => {
-					console.log(res.data);
-
-					this.list = res.data.rankList;
-				}
-			});
+			this.initData();
 		},
 		onShareAppMessage() {
 			return {
@@ -204,6 +207,22 @@
 			uni.navigateTo({
 				url: '/pages/about/about'
 			});
+		},
+		onPullDownRefresh() {
+			console.log('onPullDownRefresh');
+			this.initData();
+			// this.initData();
+		},
+		onReachBottom() {
+			console.log("onReachBottom");
+			// if (this.max > 40) {
+			// 	this.loadMoreText = "没有更多数据了!"
+			// 	return;
+			// }
+			this.showLoadMore = true;
+			setTimeout(() => {
+				this.getMoreListData();
+			}, 300);
 		},
 		// #ifdef H5
 		watch: {
@@ -227,6 +246,45 @@
 		},
 		// #endif
 		methods: {
+			initData(){
+				setTimeout(() => {
+					uni.request({
+						url: 'https://www.fastmock.site/mock/d52e60b6a14228ac1afac5b2899e2760/v1/shortLease', //仅为示例，并非真实接口地址。
+						data: {
+							text: 'uni.request'
+						},
+						header: {
+							'custom-header': 'hello' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data);
+							this.loading = false;
+							this.list = res.data.rankList;
+						}
+					});
+					uni.stopPullDownRefresh();
+				}, 300);
+			},
+			getMoreListData() {
+				uni.request({
+					url: 'https://www.fastmock.site/mock/d52e60b6a14228ac1afac5b2899e2760/v1/shortLease', //仅为示例，并非真实接口地址。
+					data: {
+						text: 'uni.request'
+					},
+					header: {
+						'custom-header': 'hello' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data);
+						this.showLoadMore = false;
+						let data = res.data.rankList;
+						this.list = this.list.concat(data);
+					}
+				});
+			},
+			onrefresh(e) {
+				console.log(1)
+			},
 			changeIndicatorDots(e) {
 				this.indicatorDots = !this.indicatorDots
 			},

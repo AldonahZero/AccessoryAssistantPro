@@ -100,7 +100,7 @@ var components
 try {
   components = {
     pageHead: function () {
-      return __webpack_require__.e(/*! import() | components/page-head/page-head */ "components/page-head/page-head").then(__webpack_require__.bind(null, /*! @/components/page-head/page-head.vue */ 1282))
+      return __webpack_require__.e(/*! import() | components/page-head/page-head */ "components/page-head/page-head").then(__webpack_require__.bind(null, /*! @/components/page-head/page-head.vue */ 1289))
     },
   }
 } catch (e) {
@@ -165,17 +165,17 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var reciver = function reciver() {
   __webpack_require__.e(/*! require.ensure | pages/template/component-communication/reciver */ "pages/template/component-communication/reciver").then((function () {
-    return resolve(__webpack_require__(/*! ./reciver.vue */ 1695));
+    return resolve(__webpack_require__(/*! ./reciver.vue */ 1702));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 var sender = function sender() {
   __webpack_require__.e(/*! require.ensure | pages/template/component-communication/sender */ "pages/template/component-communication/sender").then((function () {
-    return resolve(__webpack_require__(/*! ./sender.vue */ 1702));
+    return resolve(__webpack_require__(/*! ./sender.vue */ 1709));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 var senderBus = function senderBus() {
   __webpack_require__.e(/*! require.ensure | pages/template/component-communication/sender-bus */ "pages/template/component-communication/sender-bus").then((function () {
-    return resolve(__webpack_require__(/*! ./sender-bus.vue */ 1709));
+    return resolve(__webpack_require__(/*! ./sender-bus.vue */ 1716));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 var _default = {

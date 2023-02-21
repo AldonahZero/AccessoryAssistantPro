@@ -102,7 +102,7 @@ var components
 try {
   components = {
     uniIndexedList: function () {
-      return __webpack_require__.e(/*! import() | uni_modules/uni-indexed-list/components/uni-indexed-list/uni-indexed-list */ "uni_modules/uni-indexed-list/components/uni-indexed-list/uni-indexed-list").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-indexed-list/components/uni-indexed-list/uni-indexed-list.vue */ 1600))
+      return __webpack_require__.e(/*! import() | uni_modules/uni-indexed-list/components/uni-indexed-list/uni-indexed-list */ "uni_modules/uni-indexed-list/components/uni-indexed-list/uni-indexed-list").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-indexed-list/components/uni-indexed-list/uni-indexed-list.vue */ 1607))
     },
   }
 } catch (e) {

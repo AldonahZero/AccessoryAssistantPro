@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "搜索饰品",
+  "usingComponents": {
+    "u-link": "/components/u-link/u-link",
+    "set-tab-bar": "/components/api-set-tabbar"
+  }
+}

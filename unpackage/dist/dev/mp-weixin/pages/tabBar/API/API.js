@@ -104,7 +104,7 @@ var components
 try {
   components = {
     uLink: function () {
-      return __webpack_require__.e(/*! import() | components/u-link/u-link */ "components/u-link/u-link").then(__webpack_require__.bind(null, /*! @/components/u-link/u-link.vue */ 1270))
+      return __webpack_require__.e(/*! import() | components/u-link/u-link */ "components/u-link/u-link").then(__webpack_require__.bind(null, /*! @/components/u-link/u-link.vue */ 1277))
     },
   }
 } catch (e) {
@@ -169,7 +169,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var setTabBar = function setTabBar() {
   __webpack_require__.e(/*! require.ensure | components/api-set-tabbar */ "components/api-set-tabbar").then((function () {
-    return resolve(__webpack_require__(/*! @/components/api-set-tabbar.nvue */ 1275));
+    return resolve(__webpack_require__(/*! @/components/api-set-tabbar.nvue */ 1282));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 var _default = {

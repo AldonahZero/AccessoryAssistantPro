@@ -104,7 +104,7 @@ var components
 try {
   components = {
     uLink: function () {
-      return __webpack_require__.e(/*! import() | components/u-link/u-link */ "components/u-link/u-link").then(__webpack_require__.bind(null, /*! @/components/u-link/u-link.vue */ 1270))
+      return __webpack_require__.e(/*! import() | components/u-link/u-link */ "components/u-link/u-link").then(__webpack_require__.bind(null, /*! @/components/u-link/u-link.vue */ 1277))
     },
   }
 } catch (e) {
