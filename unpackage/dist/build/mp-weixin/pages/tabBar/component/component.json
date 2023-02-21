@@ -1,11 +1,13 @@
 {
   "navigationBarTitleText": "出租年化",
+  "enablePullDownRefresh": true,
   "usingComponents": {
-    "uni-row": "/uni_modules/uni-row/components/uni-row/uni-row",
     "uni-fab": "/uni_modules/uni-fab/components/uni-fab/uni-fab",
     "uni-card": "/uni_modules/uni-card/components/uni-card/uni-card",
+    "uni-row": "/uni_modules/uni-row/components/uni-row/uni-row",
     "uni-col": "/uni_modules/uni-row/components/uni-col/uni-col",
     "uni-tooltip": "/uni_modules/uni-tooltip/components/uni-tooltip/uni-tooltip",
-    "uni-fav": "/uni_modules/uni-fav/components/uni-fav/uni-fav"
+    "uni-fav": "/uni_modules/uni-fav/components/uni-fav/uni-fav",
+    "loading": "/components/loading/loading"
   }
 }

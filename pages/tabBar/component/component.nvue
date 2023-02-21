@@ -65,7 +65,13 @@
 						<uni-col :span="14" :offset="2">
 							<view class="example-body">
 
-								<text class="AA-time-return">{{countShortLease(item.leasePrice,item.price)}} %</text>
+								<text class="AA-time-return" v-if="selectIndex==0">{{countShortLease(item.leasePrice,item.price)}} %</text>
+								<text class="AA-time-return" v-if="selectIndex==1">{{countLongLease(item.longLeasePrice,item.price)}} %</text>
+								<text class="AA-time-return" v-if="selectIndex==2">{{dataFormateD(item.value * 100.0)}} %</text>
+								<text class="AA-time-return" v-if="selectIndex==3">¥ {{dataFormateD(item.value / 100.0)}}</text>
+								<text class="AA-time-return" v-if="selectIndex==4">{{dataFormateD(item.value * 100.0)}} %</text>
+								<text class="AA-time-return" v-if="selectIndex==5">¥ {{dataFormateD(item.value / 100.0)}}</text>
+								<text class="AA-time-return" v-if="selectIndex==6">{{dataFormateD(item.value * 100.0)}} %</text>
 							</view>
 						</uni-col>
 
@@ -123,6 +129,7 @@
 					contentDefault: '收藏',
 					contentFav: '已收藏'
 				},
+				selectIndex: 0,
 				loading: true,
 				showLoadMore: false,
 				list: [],
@@ -168,7 +175,7 @@
 					},
 					{
 						iconPath: '/static/price-up-precent.png',
-						selectedIconPath: '/static/price-up-precent.png',
+						selectedIconPath: '/static/price-up-precent-sl.png',
 						text: '涨价百分比排行',
 						active: false
 					},
@@ -179,7 +186,7 @@
 						active: false
 					},
 					{
-						iconPath: '/static/price-down-precnet.png',
+						iconPath: '/static/price-down-precent.png',
 						selectedIconPath: '/static/price-down-precent-sl.png',
 						text: '跌价百分比排行',
 						active: false
@@ -221,7 +228,7 @@
 			// }
 			this.showLoadMore = true;
 			setTimeout(() => {
-				this.getMoreListData();
+				this.getMoreListData(this.selectIndex);
 			}, 300);
 		},
 		// #ifdef H5
@@ -246,6 +253,53 @@
 		},
 		// #endif
 		methods: {
+			dataFormateD(number){
+				return number.toFixed(2)
+			},
+			fetchOtherData(selectIndex){
+				let params = ''
+				    switch (selectIndex) { //想要判断的变量
+				        case 0: //短租年化
+				          params = 'shortLease'
+				          break
+				        case 1: //长租年化
+				          params = 'longLease'
+				          break
+				        case 2://挂刀比例
+				          params = 'STEAM'
+				          break
+						case 3: //涨价排行
+						  params = 'PRICE_UP'
+						  break
+						case 4: //涨价百分比排行
+						  params = 'PRICE_UP_PERCENT'
+						  break
+						case 5://跌价排行
+						  params = 'PRICE_DOWN'
+						  break
+						case 6://跌价百分比排行
+						  params = 'PRICE_DOWN_PERCENT'
+						  break
+				      }
+				setTimeout(() => {
+					uni.request({
+						url: 'https://www.fastmock.site/mock/d52e60b6a14228ac1afac5b2899e2760/v1/'+params, //仅为示例，并非真实接口地址。
+						data: {
+							text: 'uni.request'
+						},
+						header: {
+							'custom-header': 'hello' //自定义请求头信息
+						},
+						success: (res) => {
+							this.list = [];
+							console.log(res.data);
+							this.loading = false;
+							this.list = res.data.rankList;
+						}
+					});
+					uni.stopPullDownRefresh();
+				}, 300);
+			},
 			initData(){
 				setTimeout(() => {
 					uni.request({
@@ -265,9 +319,33 @@
 					uni.stopPullDownRefresh();
 				}, 300);
 			},
-			getMoreListData() {
+			getMoreListData(selectIndex) {
+				let params = ''
+				    switch (selectIndex) { //想要判断的变量
+				        case 0: //短租年化
+				          params = 'shortLease'
+				          break
+				        case 1: //长租年化
+				          params = 'longLease'
+				          break
+				        case 2://挂刀比例
+				          params = 'STEAM'
+				          break
+						case 3: //涨价排行
+						  params = 'PRICE_UP'
+						  break
+						case 4: //涨价百分比排行
+						  params = 'PRICE_UP_PERCENT'
+						  break
+						case 5://跌价排行
+						  params = 'PRICE_DOWN'
+						  break
+						case 6://跌价百分比排行
+						  params = 'PRICE_DOWN_PERCENT'
+						  break
+				      }
 				uni.request({
-					url: 'https://www.fastmock.site/mock/d52e60b6a14228ac1afac5b2899e2760/v1/shortLease', //仅为示例，并非真实接口地址。
+					url: 'https://www.fastmock.site/mock/d52e60b6a14228ac1afac5b2899e2760/v1/'+params, //仅为示例，并非真实接口地址。
 					data: {
 						text: 'uni.request'
 					},
@@ -298,19 +376,36 @@
 				this.duration = e.target.value
 			},
 			trigger(e) {
-				console.log(e)
-				this.content[e.index].active = !e.item.active
-				uni.showModal({
-					title: '提示',
-					content: `您${this.content[e.index].active ? '选中了' : '取消了'}${e.item.text}`,
-					success: function(res) {
-						if (res.confirm) {
-							console.log('用户点击确定')
-						} else if (res.cancel) {
-							console.log('用户点击取消')
-						}
+				
+				this.content[e.index].active = !e.item.active;
+				console.log(e.index);
+				console.log(e.item.text);
+				for(let i=0; i<=6;i++){
+					// 关闭其他激活
+					if(i!=e.index){
+						this.content[i].active = false;
 					}
-				})
+				}
+				this.selectIndex = e.index;
+				this.fetchOtherData(this.selectIndex);
+				              uni.pageScrollTo({
+				                    //实现返回顶部的功能
+				                    scrollTop:0,
+				                    duration:300
+				                })
+				
+				
+				// uni.showModal({
+				// 	title: '提示',
+				// 	content: `您${this.content[e.index].active ? '选中了' : '取消了'}${e.item.text}`,
+				// 	success: function(res) {
+				// 		if (res.confirm) {
+				// 			console.log('用户点击确定')
+				// 		} else if (res.cancel) {
+				// 			console.log('用户点击取消')
+				// 		}
+				// 	}
+				// })
 			},
 			fabClick() {
 				uni.showToast({
