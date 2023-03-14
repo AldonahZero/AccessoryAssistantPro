@@ -1,10 +1,11 @@
 <template>
 	<view class="loading">
-		<image src="/static/loading.gif"></image>
+		<image src="https://yaguang-1257256213.cos.ap-nanjing.myqcloud.com/aapro/loading.gif"></image>
 	</view>
 </template>
 
 <script>
+	
 	export default {
 		name: 'Loading',
 		data() {

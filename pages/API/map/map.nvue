@@ -256,7 +256,7 @@
                         width: 30,
                         height: 30
                     },
-                    iconPath: '/static/logo.png',
+                    iconPath: '/static/extuiHL.png',
                     clickable: true
                 }],
                 showLocation: false,

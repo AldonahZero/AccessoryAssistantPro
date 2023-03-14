@@ -1,7 +1,9 @@
 {
   "navigationBarTitleText": "搜索饰品",
   "usingComponents": {
-    "u-link": "/components/u-link/u-link",
-    "set-tab-bar": "/components/api-set-tabbar"
+    "uni-search-bar": "/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar",
+    "uni-icons": "/uni_modules/uni-icons/components/uni-icons/uni-icons",
+    "uni-list": "/uni_modules/uni-list/components/uni-list/uni-list",
+    "uni-list-item": "/uni_modules/uni-list/components/uni-list-item/uni-list-item"
   }
 }

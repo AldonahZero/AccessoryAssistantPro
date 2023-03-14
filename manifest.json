@@ -70,7 +70,8 @@
             "sdkConfigs" : {
                 "speech" : {
                     "ifly" : {}
-                }
+                },
+                "oauth" : {}
             },
             "orientation" : [ "portrait-primary" ]
         },
@@ -99,7 +100,9 @@
         "appid" : "wx384dca7df50c60df",
         "setting" : {
             "urlCheck" : false,
-            "minified" : true
+            "minified" : true,
+            "es6" : true,
+            "postcss" : true
         },
         "usingComponents" : true,
         "permission" : {},

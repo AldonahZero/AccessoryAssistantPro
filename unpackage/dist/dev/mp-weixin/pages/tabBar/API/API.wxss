@@ -33,145 +33,210 @@ button {
 
 
 page {
-    min-height: 100%;
-    height: auto;
+	height: 100%;
+	flex: 1;
 }
 
-/* 解决头条小程序字体图标不显示问题，因为头条运行时自动插入了span标签，且有全局字体 */
-.uni-icon {
-    font-family: uniicons;
-    font-weight: normal;
-}
-.uni-container {
-    padding: 15px;
-    background-color: #f8f8f8;
-}
-.uni-header-logo {
 
-
-
-    padding: 15px 15px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10rpx;
-}
-.uni-header-image {
-    width: 80px;
-    height: 80px;
-}
-.uni-hello-text {
-    margin-bottom: 20px;
-}
-.hello-text {
-    color: #7A7E83;
-    font-size: 14px;
-    line-height: 20px;
-}
-.hello-link {
-    color: #7A7E83;
-    font-size: 14px;
-    line-height: 20px;
-}
-.uni-panel {
-    margin-bottom: 12px;
-}
-.uni-panel-h {
-
-
-
-    background-color: #ffffff;
-    flex-direction: row !important;
-	/* justify-content: space-between !important; */
-    align-items: center !important;
-    padding: 12px;
-}
-/*
-.uni-panel-h:active {
-    background-color: #f8f8f8;
-}
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
  */
-.uni-panel-h-on {
-    background-color: #f0f0f0;
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.container.data-v-b6fbeb1e {
+  height: 100%;
+  flex: 1;
+  background-color: #f7f7f7;
 }
-.uni-panel-text {
-    flex: 1;
-    color: #000000;
-    font-size: 14px;
-    font-weight: normal;
+.search-body.data-v-b6fbeb1e {
+  background-color: #fff;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
-.uni-panel-icon {
-    margin-left: 15px;
-    color: #999999;
-    font-size: 14px;
-    font-weight: normal;
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-    transition-duration: 0s;
-    transition-property: -webkit-transform;
-    transition-property: transform;
-    transition-property: transform, -webkit-transform;
+.flex-center.data-v-b6fbeb1e {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.uni-panel-icon-on {
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
+.flex-row.data-v-b6fbeb1e {
+  display: flex;
+  flex-direction: row;
 }
-.uni-navigate-item {
-
-
-
-    flex-direction: row;
-    align-items: center;
-    background-color: #FFFFFF;
-    border-top-style: solid;
-    border-top-color: #f0f0f0;
-    border-top-width: 1px;
-    padding: 12px;
+.data-v-b6fbeb1e
+.uni-searchbar__box {
+  border-width: 0;
 }
-.uni-navigate-item:active {
-    background-color: #f8f8f8;
+.data-v-b6fbeb1e
+.uni-input-placeholder {
+  font-size: 28rpx;
 }
-.uni-navigate-text {
-    flex: 1;
-    color: #000000;
-    font-size: 14px;
-    font-weight: normal;
+.search-container.data-v-b6fbeb1e {
+  height: 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: #fff;
 }
-.uni-navigate-icon {
-    margin-left: 15px;
-    color: #999999;
-    font-size: 14px;
-    font-weight: normal;
+.search-container-bar.data-v-b6fbeb1e {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
-.AA-money {
-	font-size: 20px;
-	color : darkorange;
-	/* margin-right: 46px; */
+.search-associative.data-v-b6fbeb1e {
+  overflow-y: auto;
+  position: absolute;
+  top: 52px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  margin-top: 10rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
 }
-.AA-time-return{
-	font-size: 28px;
-	color : C34A51;
+.search-icons.data-v-b6fbeb1e {
+  padding: 16rpx;
 }
-.AA-money-change {
-	font-size: 15px;
-	color : darkred;
-	white-space:pre-line;
+.word-display.data-v-b6fbeb1e {
+  font-size: 26rpx;
+  color: #666;
 }
-.AA-money-change-down {
-	font-size: 15px;
-	color : green;
-	white-space:pre-line;
+.word-container.data-v-b6fbeb1e {
+  padding: 20rpx;
 }
-.rental-prices {
-	color : blueviolet;
-	/* margin-right: 16px; */
+.word-container_header.data-v-b6fbeb1e {
+  display: flex;
+  height: 72rpx;
+  line-height: 72rpx;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
-.rental-trend {
-	color : coral;
-	/* margin-right: 18px; */
+.word-container_header-text.data-v-b6fbeb1e {
+  color: #3e3e3e;
+  font-size: 30rpx;
+  font-weight: bold;
 }
-.banner-image {
-    width: 400px;
-    height: 160px;
+.word-container_body.data-v-b6fbeb1e {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.word-container_body-text.data-v-b6fbeb1e {
+  display: flex;
+  font-size: 26rpx;
+  color: #666;
+  justify-content: center;
+  align-items: center;
+  background-color: #f6f6f6;
+  padding: 10px 20px;
+  margin: 20px 30px 0px 0px;
+  border-radius: 30px;
+  box-sizing: border-box;
+  text-align: center;
+}
+.word-container_body-info.data-v-b6fbeb1e {
+  display: block;
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  color: #808080;
+  margin-top: 20rpx;
+}
+page.data-v-b6fbeb1e {
+  background-color: #eee;
+  height: 100%;
+}
+.pubuBox.data-v-b6fbeb1e {
+  padding: 22rpx;
+}
+.pubuItem.data-v-b6fbeb1e {
+  display: inline-block;
+  vertical-align: top;
+  width: 98%;
+  -webkit-column-count: 2;
+          column-count: 2;
+  -webkit-column-gap: 20rpx;
+          column-gap: 20rpx;
+}
+.item-masonry.data-v-b6fbeb1e {
+  box-sizing: border-box;
+  border-radius: 15rpx;
+  overflow: hidden;
+  background-color: #fff;
+  -webkit-column-break-inside: avoid;
+          break-inside: avoid;
+  /*避免在元素内部插入分页符*/
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+  box-shadow: 0px 0px 28rpx 1rpx rgba(78, 101, 153, 0.14);
+}
+.item-masonry image.data-v-b6fbeb1e {
+  width: 95%;
+}
+.listtitle.data-v-b6fbeb1e {
+  padding-left: 22rpx;
+  font-size: 24rpx;
+  padding-bottom: 22rpx;
+}
+.listtitle .listtitle1.data-v-b6fbeb1e {
+  line-height: 39rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 39rpx;
+  max-height: 78rpx;
+}
+.listtitle .listtitle2.data-v-b6fbeb1e {
+  color: #ff0000;
+  font-size: 32rpx;
+  line-height: 32rpx;
+  font-weight: bold;
+  padding-top: 22rpx;
+}
+.listtitle .listtitle2 .listtitle2son.data-v-b6fbeb1e {
+  font-size: 32rpx;
+}
+.listtitle .listtitle3.data-v-b6fbeb1e {
+  font-size: 28rpx;
+  color: #909399;
+  line-height: 32rpx;
+  padding-top: 22rpx;
+}
+.Index.data-v-b6fbeb1e {
+  width: 100%;
+  height: 100%;
 }
 

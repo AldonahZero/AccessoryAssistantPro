@@ -60,7 +60,7 @@
 			reLaunch() {
 				if (this.hasLeftWin) {
 					uni.reLaunch({
-						url: '/pages/component/view/view'
+						url: '/pages/tabBar/component/component'
 					});
 					return;
 				}
