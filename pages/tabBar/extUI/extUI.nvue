@@ -1,44 +1,66 @@
 <template>
 
-	<view class="container" v-if="!loading">
-		<view class="container" scroll-y="true">
-			<!-- 		<refresh @refresh="onrefresh" name="leaseFresh">
+	<view class="container" v-if="!loading" scroll-y="true">
+		<!-- 		<refresh @refresh="onrefresh" name="leaseFresh">
 			</refresh> -->
-			<!-- 			<uni-fab ref="fab" :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical"
+		<!-- 			<uni-fab ref="fab" :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical"
 				:direction="direction" @trigger="trigger" @fabClick="fabClick" />
 		 -->
-			<view class="uni-panel">
-				<uni-card title="大盘数据" :isFull="true" :extra=upDateTime>
-					<!-- 				<image class="uni-header-image" :src="item.iconUrl"></image> -->
-					<uni-row class="demo-uni-row">
-						<uni-col :span="14">
-							<view class="example-body">
+		<view class="uni-panel">
+			<uni-card :title=upDateTime :isFull="true" extra="大盘数据">
+				<!-- 				<image class="uni-header-image" :src="item.iconUrl"></image> -->
+				<uni-row class="demo-uni-row">
+					<uni-col :span="14">
+						<view class="example-body">
 
-								<text class="AA-money">总底价: ¥{{this.totalPrice}} </text>
-								<text class="rental-trend">总在售量 {{this.totalSellCount}} </text>
-							</view>
+							<text class="AA-money">总底价: ¥{{this.totalPrice}} </text>
+						</view>
 
-						</uni-col>
-						<!-- <uni-col :span="16" :offset="6">
-							<view class="example-body">
-								<uni-tooltip class="AA-money-change"
-									:content="(100)"
-									v-if="100>0">价格变动:
-									📈{{(100 *100).toFixed(3)}} %</uni-tooltip>
-								<uni-tooltip class="AA-money-change-down"
-									:content="100" v-else>价格变动:
-									📉{{(100).toFixed(3)}} %
-								</uni-tooltip>
-							</view>
-						</uni-col> -->
-					</uni-row>
-				</uni-card>
-			</view>
-			<view class="charts-box">
-				<qiun-data-charts type="rose" :opts="opts" :chartData="chartData" />
-			</view>
+					</uni-col>
+					<uni-col :span="16" :offset="2">
+						<view class="example-body">
+							<uni-tooltip class="AA-money-change" :content="totalPricePercnet"
+								v-if="totalPricePercnet>0">📈{{(totalPricePercnet * 100).toFixed(4)}} %
+							</uni-tooltip>
+							<uni-tooltip class="AA-money-change-down" :content="totalPricePercnet" v-else>
+								📉{{(totalPricePercnet * 100).toFixed(4)}} %
+							</uni-tooltip>
+						</view>
+					</uni-col>
 
+				</uni-row>
+				<uni-row class="demo-uni-row">
+					<uni-col :span="14">
+						<view class="example-body">
+							<text class="rental-trend">总在售量 {{this.totalSellCount}} </text>
+						</view>
+
+					</uni-col>
+					<uni-col :span="16" :offset="2">
+						<view class="example-body">
+							<uni-tooltip class="AA-money-change" :content="totalSellCountPercnet"
+								v-if="totalSellCountPercnet>0">📈{{(totalSellCountPercnet * 100).toFixed(4)}} %
+							</uni-tooltip>
+							<uni-tooltip class="AA-money-change-down" :content="totalSellCountPercnet" v-else>
+								📉{{(totalSellCountPercnet * 100).toFixed(4)}} %
+							</uni-tooltip>
+						</view>
+					</uni-col>
+
+				</uni-row>
+			</uni-card>
 		</view>
+		<view class="uni-panel">
+			<uni-card title="数据分析" :isFull="true" extra="各类型底价涨跌">
+				<view class="charts-box">
+					<qiun-data-charts type="rose" :opts="opts" :chartData="chartData" />
+				</view>
+				<view class="charts-box">
+					<qiun-data-charts type="line" :opts="opts2" :chartData="chartData2" />
+				</view>
+			</uni-card>
+		</view>
+
 
 	</view>
 	<loading v-else></loading>
@@ -55,6 +77,7 @@
 			return {
 				loading: true,
 				chartData: {},
+				chartData2: {},
 				opts: {
 					color: ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4",
 						"#ea7ccc"
@@ -81,21 +104,58 @@
 						}
 					}
 				},
+				opts2: {
+					color: ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4",
+						"#ea7ccc"
+					],
+					padding: [15, 10, 0, 15],
+					dataLabel: false,
+					dataPointShape: false,
+					enableScroll: false,
+					legend: {},
+					xAxis: {
+						disableGrid: true
+					},
+					yAxis: {
+						gridType: "dash",
+						dashLength: 2,
+						data: [{
+							min: 0,
+							max: 150
+						}]
+					},
+					extra: {
+						line: {
+							type: "curve",
+							width: 2,
+							activeType: "hollow",
+							linearType: "custom",
+							onShadow: true,
+							animation: "horizontal"
+						}
+					}
+				},
 				marketData: [],
 				totalPrice: 0.0,
+				pastTotalPrice: 0.0,
+				totalPricePercnet: 0.0,
 				totalSellCount: 0,
+				pastTotalSellCount: 0,
+				totalSellCountPercnet: 0.0,
 				upDateTime: '',
 			};
 		},
 		onLoad() {
-			this.initData();
 		},
 		onReady() {
-			this.getServerData();
+			this.initData();
+			// this.getServerData();
 		},
 		methods: {
+			caculate(now, past) {
+				return (now - past) / past;
+			},
 			initData() {
-
 				setTimeout(() => {
 					uni.request({
 						url: 'https://www.fastmock.site/mock/d52e60b6a14228ac1afac5b2899e2760/v1/marketData', //仅为示例，并非真实接口地址。
@@ -109,9 +169,43 @@
 							console.log(res.data);
 							this.loading = false;
 							this.marketData = res.data.marketData;
+
 							this.totalPrice = this.marketData[6].total.totalPrice / 100.0;
+							this.pastTotalPrice = this.marketData[0].total.totalPrice / 100.0;
+							this.totalPricePercnet = this.caculate(this.totalPrice, this
+								.pastTotalPrice)
+
 							this.totalSellCount = this.marketData[6].total.totalSellCount;
-							this.upDateTime = this.marketData[6].createTime;
+							this.pastTotalSellCount = this.marketData[0].total.totalSellCount;
+							this.totalSellCountPercnet = this.caculate(this.totalSellCount, this
+								.pastTotalSellCount)
+
+							this.upDateTime = new Date(this.marketData[6].createTime)
+								.toLocaleTimeString();
+							
+							let roseData = {
+								series: [{
+									data: [{
+										"name": "一班",
+										"value": 50,
+										"labelText":"匕首 number percnet"
+									}, {
+										"name": "二班",
+										"value": 30
+									}, {
+										"name": "三班",
+										"value": 20
+									}, {
+										"name": "四班",
+										"value": 18
+									}, {
+										"name": "五班",
+										"value": 8
+									}]
+								}]
+							};
+							this.chartData = JSON.parse(JSON.stringify(roseData));
+							
 						}
 					});
 					uni.stopPullDownRefresh();
@@ -125,7 +219,8 @@
 						series: [{
 							data: [{
 								"name": "一班",
-								"value": 50
+								"value": 50,
+								"labelText":"匕首 number percnet"
 							}, {
 								"name": "二班",
 								"value": 30
@@ -143,6 +238,81 @@
 					};
 					this.chartData = JSON.parse(JSON.stringify(res));
 				}, 500);
+				
+				//模拟从服务器获取数据时的延时
+				      setTimeout(() => {
+				        //模拟服务器返回数据，如果数据格式和标准格式不同，需自行按下面的格式拼接
+				        let res = {
+				            categories: ["2018","2019","2020","2021","2022","2023"],
+				            series: [
+				              {
+				                name: "成交量A",
+				                linearColor: [
+				                  [
+				                    0,
+				                    "#1890FF"
+				                  ],
+				                  [
+				                    0.25,
+				                    "#00B5FF"
+				                  ],
+				                  [
+				                    0.5,
+				                    "#00D1ED"
+				                  ],
+				                  [
+				                    0.75,
+				                    "#00E6BB"
+				                  ],
+				                  [
+				                    1,
+				                    "#90F489"
+				                  ]
+				                ],
+				                setShadow: [
+				                  3,
+				                  8,
+				                  10,
+				                  "#1890FF"
+				                ],
+				                data: [15,45,15,45,15,45]
+				              },
+				              {
+				                name: "成交量B",
+				                data: [55,85,55,85,55,85]
+				              },
+				              {
+				                name: "成交量C",
+				                linearColor: [
+				                  [
+				                    0,
+				                    "#FAC858"
+				                  ],
+				                  [
+				                    0.33,
+				                    "#FFC371"
+				                  ],
+				                  [
+				                    0.66,
+				                    "#FFC2B2"
+				                  ],
+				                  [
+				                    1,
+				                    "#FA7D8D"
+				                  ]
+				                ],
+				                setShadow: [
+				                  3,
+				                  8,
+				                  10,
+				                  "#FC8452"
+				                ],
+				                data: [95,125,95,125,95,125]
+				              }
+				            ]
+				          };
+				        this.chartData2 = JSON.parse(JSON.stringify(res));
+				      }, 500);
 			},
 		}
 	};
